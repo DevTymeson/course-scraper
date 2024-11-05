@@ -11,3 +11,7 @@ A command-line tool to scrape and store course information from Penn State's bul
 ## License
 
 This project is proprietary and is not licensed for distribution, modification, or commercial use. Unauthorized use of this code is prohibited.
+
+## Disclaimer
+
+This project uses university course names, class codes, and descriptions strictly for educational purposes, with no intent to distribute, misuse, or claim ownership of the data. All data accessed and extracted by this program is publicly available on The Pennsylvania State University's [official course page](https://bulletins.psu.edu/university-course-descriptions/). The Pennsylvania State University retains full ownership of all course-related information presented there.
