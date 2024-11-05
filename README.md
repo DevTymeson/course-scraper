@@ -10,4 +10,4 @@ A command-line tool to scrape and store course information from Penn State's bul
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the MIT License. See the [LICENSE] file for more information.
