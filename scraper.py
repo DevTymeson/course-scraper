@@ -81,9 +81,9 @@ def fetch_courses(subject: str) -> list[Tag]:
 def extract_course_info(course: Tag) -> tuple[str, str, str, str, str]:
     ''' Extracts the course code, name, number of credits, description, and attributes from a course. '''
     details_div = course.find('div', class_='courseblocktitle_bubble')
-    code = ' '.join(span.get_text() for span in details_div.find('div', class_='course_code').find_all('span')) # type: ignore
-    name = details_div.find('div', class_='course_codetitle').get_text(strip=True) # type: ignore
-    credit_text = details_div.find('div', class_='course_credits').get_text(strip=True) # type: ignore
+    code = ' '.join(span.get_text(' ', strip=True) for span in details_div.find('div', class_='course_code').find_all('span')) # type: ignore
+    name = details_div.find('div', class_='course_codetitle').get_text(' ', strip=True) # type: ignore
+    credit_text = details_div.find('div', class_='course_credits').get_text(' ', strip=True) # type: ignore
     
     credit_nums = []
     for char in credit_text:
@@ -94,7 +94,8 @@ def extract_course_info(course: Tag) -> tuple[str, str, str, str, str]:
     credit_hours = ''.join(credit_nums)
     
     try:
-        description = course.find('div', class_='courseblockdesc').find('p').get_text(strip=True) # type: ignore
+        description = course.find('div', class_='courseblockdesc').find('p').get_text(' ', strip=True) # type: ignore
+        description = re.sub(r'[\s\xa0]+', ' ', description)
     except:
         description = 'N/A'
         
@@ -102,7 +103,7 @@ def extract_course_info(course: Tag) -> tuple[str, str, str, str, str]:
         attributes_paragraphs = course.find('div', class_='courseblockextra').findAll('p') # type: ignore
         attrbiutes_list = []
         for attribute in attributes_paragraphs:
-            text = attribute.get_text()
+            text = attribute.get_text(' ', strip=True)
             if 'Objective' not in text:
                 clean_text = re.sub(r'[\s\xa0]+', ' ', text)
                 attrbiutes_list.append(clean_text.strip())
