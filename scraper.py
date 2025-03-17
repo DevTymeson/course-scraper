@@ -35,9 +35,9 @@ def fetch_category_links(base_url: str) -> list[str]:
         links = soup.find('ul', id='/university-course-descriptions/')
         if links:
             category_links = [
-                urljoin(base_url, link.find('a').get('href'))
+                urljoin(base_url, link.find('a').get('href')) # type: ignore
                 for link in links.find_all('li') # type: ignore
-                if link.find('a')
+                if link.find('a') # type: ignore
             ]
             logging.info(f'Fetched {len(category_links)} category links.')
             return category_links
@@ -57,9 +57,9 @@ def fetch_subject_links(category: str) -> list[str]:
         soup = BeautifulSoup(response.text, 'html.parser')
         ul_elements = soup.find('div', class_='az_sitemap').find_all('ul')  # type: ignore
         subject_links = [
-            urljoin(category, li.find('a').get('href'))
-            for ul in ul_elements for li in ul.find_all('li')
-            if li.find('a') and not li.find('a').get('href').startswith('#')
+            urljoin(category, li.find('a').get('href')) # type: ignore
+            for ul in ul_elements for li in ul.find_all('li') # type: ignore
+            if li.find('a') and not li.find('a').get('href').startswith('#') # type: ignore
         ]
         logging.info(f'Fetched {len(subject_links)} subject links from {category}.')
         return subject_links
@@ -100,7 +100,7 @@ def extract_course_info(course: Tag) -> tuple[str, str, str, str, str]:
         description = 'N/A'
         
     try:
-        attributes_paragraphs = course.find('div', class_='courseblockextra').findAll('p') # type: ignore
+        attributes_paragraphs = course.find('div', class_='courseblockextra').find_all('p') # type: ignore
         attrbiutes_list = []
         for attribute in attributes_paragraphs:
             text = attribute.get_text(' ', strip=True)
